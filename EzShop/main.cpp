@@ -4,7 +4,12 @@ EzShop: Shopping, Simplified!
 Created by: Joshua Gastaldello, [add your names here]
 */
 
-#include<iostream>
+/*
+- Create functions in seperate .cpp files! Anyone know how?!?!
+- 
+*/
+
+#include<iostream> //used for cout and cin
 
 using namespace std;
 
