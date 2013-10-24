@@ -1,0 +1,6 @@
+apple , 5
+computer , 3
+ipod , 7
+orange , 7
+peach , 1
+ppt file , 50

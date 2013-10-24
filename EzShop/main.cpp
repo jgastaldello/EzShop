@@ -5,17 +5,34 @@ Created by: Joshua Gastaldello, [add your names here]
 */
 
 /*
-- Create functions in seperate .cpp files! Anyone know how?!?!
-- 
+TODO:
+- welcome page
+- user menu
+- remove items (Josh, Vikash)
+- view items (Eric, Grant)
 */
 
-#include<iostream> //used for cout and cin
+#include "inventoryList.h"
+#include "inventory.h"
+#include <fstream>
+#include <iostream>
+#include <string>
 
-using namespace std;
 
 int main()
 {
-	cout << "Welcome to EzShop!\n\n";
+	inventoryList testList = inventoryList();
+	//inventory apple = inventory("apple", 5);
+	//apple.setSize(10);
+	//apple.setName("APPLE");
+	testList.addInventory("apple", 5);
+	testList.addInventory("orange", 7);
+	testList.addInventory("peach", 1);
+	testList.addInventory("computer", 3);
+	testList.addInventory("ipod", 7);
+	testList.addInventory("ppt file", 50);
+	testList.sortInventory();
+	testList.saveInventory();
 
-	return 0;
+	system("pause");
 }
