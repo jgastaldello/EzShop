@@ -15,3 +15,7 @@
 # Debug Files
 Debug/
 EzShop/Debug/
+
+# List files
+*.txt
+*.csv
