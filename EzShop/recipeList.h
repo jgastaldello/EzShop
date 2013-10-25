@@ -13,7 +13,7 @@ public:
 	void viewRecipe();
 	void loadRecipe();
 private:
-	itemList recipe;
+	itemList* recipe;
 	string recipeName;
 	arrIndex;// indicate the last element
 	arrSize;// the size of the array
