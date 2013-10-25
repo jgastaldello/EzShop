@@ -3,6 +3,9 @@
 
 recipeList::recipeList(void)
 {
+  arrList =  new itemList [10];
+	arrIndex = 0;// indicate the last element
+	arrSize = 10;// the size of the array
 }
 
 
