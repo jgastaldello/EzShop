@@ -10,10 +10,11 @@ class inventoryList
 	public:
 		inventoryList(void);
 		~inventoryList(void);
+		bool inventoryList::openInventory(string fileName);
 		void addInventory(string name, int size);
 		void removeInventory(string name, int size);
 		void sortInventory();
-		void saveInventory();
+		void saveInventory(string fileName);
 		void viewInventory();
 		void loadInventory();
 	private:
