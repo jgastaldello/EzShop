@@ -1,12 +1,13 @@
 #include "inventory.h"
 
+
 inventory::inventory(void)
 {
 	size = 0;
 	name = "Nothing";
 }
 
-inventory::inventory(string n, int s)
+inventory::inventory(string n , int s)
 {
 	size = s;
 	name = n;
@@ -22,7 +23,7 @@ void inventory::setName(string n)
 }
 void inventory::setSize(int s)
 {
-	size = s;
+	size = s;	
 }
 string inventory::getName() const
 {
@@ -30,5 +31,13 @@ string inventory::getName() const
 }
 int inventory::getSize() const
 {
-	return size;
+	return size;	
+}
+string inventory::getUnit() const
+{
+	return unit;
+}
+void inventory::setUnit(string u) 
+{
+	unit = u;	
 }
