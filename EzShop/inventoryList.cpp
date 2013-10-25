@@ -1,6 +1,8 @@
 #include "inventoryList.h"
+
 #include <fstream>
 #include <iostream>
+#include <algorithm>
 
 inventoryList::inventoryList(void)
 {
@@ -18,20 +20,42 @@ void inventoryList::addInventory(string name, int size)
 	arrList[arrIndex] = inventory(name, size);
 	arrIndex++;
 }
-void inventoryList::removeInventory()
+//removes an item from the inventory
+void inventoryList::removeInventory(string itemName, int numToRemove) //Josh and Vikash
 {
+	//std::find(arrList[1].getName(), arrList[arrIndex].getName(), name); //idk how to use this...
+	int location = 1;
+	//searches for the specified item
+	for (int x = 1; x <= arrIndex; x++)
+	{
+		if (itemName == arrList[x].getName())
+		{
+			location = x;
+			break;
+		}
+	}
+	arrList[location].setSize(arrList[location].getSize() - numToRemove);
+
+	if (arrList[location].getSize() == 0)
+	{
+		//arrList[location].erase(); //this doesn't work?
+	}
 }
-void inventoryList::sortInventory() //insertion sort
+//Sorts the inventory class(?) using insertion sort
+void inventoryList::sortInventory() //Arthur and Karen
 {
-	for (int i = 1; i < arrIndex; i++) {
+	for (int i = 1; i < arrIndex; i++) 
+	{
 		string key = arrList[i].getName();
-		for (int j = i - 1; j >= 0 && (arrList[j].getName()).compare(key) > 0; j--) {
+		for (int j = i - 1; j >= 0 && (arrList[j].getName()).compare(key) > 0; j--) 
+		{
 			inventory temp = arrList[j + 1];
 			arrList[j + 1] = arrList[j];
 			arrList[j] = temp;
 		}
 	}
 }
+//saves the inventory to a txt file
 void inventoryList::saveInventory()
 {
 	ofstream myFile;

@@ -14,10 +14,7 @@ TODO:
 
 #include "inventoryList.h"
 #include "inventory.h"
-#include <fstream>
 #include <iostream>
-#include <string>
-
 
 int main()
 {
@@ -31,8 +28,11 @@ int main()
 	testList.addInventory("computer", 3);
 	testList.addInventory("ipod", 7);
 	testList.addInventory("ppt file", 50);
+
+	testList.removeInventory("ppt file", 10);
+	testList.removeInventory("peach", 1);
 	testList.sortInventory();
 	testList.saveInventory();
-
 	system("pause");
+	return 0;
 }

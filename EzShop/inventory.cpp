@@ -1,6 +1,5 @@
 #include "inventory.h"
 
-
 inventory::inventory(void)
 {
 	size = 0;
