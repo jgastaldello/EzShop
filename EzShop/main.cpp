@@ -9,10 +9,14 @@ TODO:
 - user menu
 - remove items (Josh, Vikash)
 - load items from file (Erick, Grant)
+- change itemList to itemList
+- change inventory to list
 */
 
-#include "inventoryList.h"
-#include "inventory.h"
+//DO NOT CLEAR THE SCREEN UNTIL THE PROGRAM IS COMPLETE!
+
+#include "itemList.h"
+#include "item.h"
 #include <iostream>
 
 //gets a Y or N input and returns T or F
@@ -44,19 +48,19 @@ int numberRangeChoice(int min, int max)
 	return input;
 }
 
-void chooseFile(inventoryList &items)
+void chooseFile(itemList &inventoryList)
 {
 	string fileName;
 	cout << "\nEnter your file name (no extension): ";
 	getline(cin, fileName);
 
-	while (!items.openInventory(fileName))
+	while (!inventoryList.openList(fileName))
 	{
 		cout << "File does not exist!\n";
 	}
 }
 //displays welcome and opens existing inventory
-void start(inventoryList &items,bool &choice)
+void start(itemList &inventoryList, bool &choice)
 {
 	cout << "Welcome to EzShop!\n";
 	cout << "\n";
@@ -65,10 +69,14 @@ void start(inventoryList &items,bool &choice)
 
 	if (choice)
 	{
-		chooseFile(items);
+		chooseFile(inventoryList);
 	}
 }
-void menu(bool listSaved)
+void viewInventory(itemList &inventoryList)
+{
+	cout << "";
+}
+void menu(bool listSaved, itemList &inventoryList)
 {
 	int totalMenuItems = 0;
 	cout << ++totalMenuItems << ": Add items\n";
@@ -92,6 +100,8 @@ void menu(bool listSaved)
 		break;
 	case 3:
 		//view items
+		cout << "\n";
+		inventoryList.viewList();
 		break;
 	case 4:
 		//save list
@@ -108,27 +118,28 @@ void menu(bool listSaved)
 }
 int main()
 {
-	inventoryList items = inventoryList();
+	itemList inventoryList = itemList();
 	bool listSaved = false;
-	start(items,listSaved);
+	start(inventoryList,listSaved);
 	cout << "\n";
-	menu(listSaved);
-	/*
-	//inventoryList testList = inventoryList();
+	
+	//itemList testList = itemList();
 	//inventory apple = inventory("apple", 5);
 	//apple.setSize(10);
 	//apple.setName("APPLE");
-	testList.addInventory("apple", 5);
-	testList.addInventory("orange", 7);
-	testList.addInventory("peach", 1);
-	testList.addInventory("computer", 3);
-	testList.addInventory("ipod", 7);
-	testList.addInventory("ppt file", 50);
 
-	testList.removeInventory("ppt file", 10);
-	testList.removeInventory("peach", 1);
-	testList.sortInventory();
-	testList.saveInventory("inventory");*/
+	inventoryList.addList("apple", 5);
+	inventoryList.addList("orange", 7);
+	inventoryList.addList("peach", 1);
+	inventoryList.addList("computer", 3);
+	inventoryList.addList("ipod", 7);
+	inventoryList.addList("ppt file", 50);
+
+	inventoryList.removeList("ppt file", 10);
+	inventoryList.removeList("peach", 1);
+	inventoryList.sortList();
+
+	menu(listSaved, inventoryList);
 
 	system("pause");
 	return 0;

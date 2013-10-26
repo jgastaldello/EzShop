@@ -78,13 +78,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="inventory.cpp" />
-    <ClCompile Include="inventoryList.cpp" />
+    <ClCompile Include="item.cpp" />
+    <ClCompile Include="itemList.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inventory.h" />
-    <ClInclude Include="inventoryList.h" />
+    <ClInclude Include="item.h" />
+    <ClInclude Include="itemList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
