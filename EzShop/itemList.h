@@ -11,15 +11,12 @@ class itemList
 		itemList(void);
 		~itemList(void);
 		bool itemList::openList(string fileName);
-		void addList(string name, int size);
-		void removeList(string name, int size);
+		void addListItem(string name, int size, string unit);
+		void removeListItem(string name, int size);
 		void sortList();
 		void saveList(string fileName);
-		void viewList();
+		void viewList() const;
 		void loadList();
 	private:
-		item* arrList;
-		int arrIndex;
-		int arrSize;
+		vector<item> list;
 };
-

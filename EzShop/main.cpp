@@ -13,7 +13,7 @@ TODO:
 - change inventory to list
 */
 
-//DO NOT CLEAR THE SCREEN UNTIL THE PROGRAM IS COMPLETE!
+//DO NOT INSERT ANY CLEAR SCREENS UNTIL THE PROGRAMMING IS COMPLETE!
 
 #include "itemList.h"
 #include "item.h"
@@ -47,14 +47,14 @@ int numberRangeChoice(int min, int max)
 	cin.sync();
 	return input;
 }
-
-void chooseFile(itemList &inventoryList)
+//opens an inventory file
+void chooseFile(itemList &list)
 {
 	string fileName;
 	cout << "\nEnter your file name (no extension): ";
 	getline(cin, fileName);
 
-	while (!inventoryList.openList(fileName))
+	while (!list.openList(fileName))
 	{
 		cout << "File does not exist!\n";
 	}
@@ -118,7 +118,7 @@ void menu(bool listSaved, itemList &inventoryList)
 }
 int main()
 {
-	itemList inventoryList = itemList();
+	itemList inventoryList;
 	bool listSaved = false;
 	start(inventoryList,listSaved);
 	cout << "\n";
@@ -128,15 +128,20 @@ int main()
 	//apple.setSize(10);
 	//apple.setName("APPLE");
 
-	inventoryList.addList("apple", 5);
-	inventoryList.addList("orange", 7);
-	inventoryList.addList("peach", 1);
-	inventoryList.addList("computer", 3);
-	inventoryList.addList("ipod", 7);
-	inventoryList.addList("ppt file", 50);
+	inventoryList.addListItem("apple", 5,"items");
+	inventoryList.addListItem("orange", 7, "items");
+	inventoryList.addListItem("peach", 1, "items");
+	inventoryList.addListItem("computer", 3, "items");
+	inventoryList.addListItem("ipod", 7, "items");
+	inventoryList.addListItem("ppt file", 50, "files");
+	inventoryList.addListItem("laptop", 3, "items");
+	inventoryList.addListItem("phone", 100, "items");
+	inventoryList.addListItem("milk", 2, "2L jugs");
+	inventoryList.addListItem("coke", 24, "cans");
+	inventoryList.addListItem("storage", 1024, "gigabytes");
 
-	inventoryList.removeList("ppt file", 10);
-	inventoryList.removeList("peach", 1);
+	//inventoryList.removeListItem("ppt file", 10);
+	//inventoryList.removeListItem("peach", 1);
 	inventoryList.sortList();
 
 	menu(listSaved, inventoryList);

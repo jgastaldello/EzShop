@@ -9,7 +9,7 @@ public:
 	recipeList(void);
 	~recipeList(void);
 	void addRecipe(string name);
-	void removeRecipey();
+	void removeRecipe();
 	void sortRecipe();
 	void saveRecipe();
 	void viewRecipe();
@@ -17,8 +17,7 @@ public:
 private:
 	itemList* recipe;
 	string recipeName;
-	arrIndex;// indicate the last element
-	arrSize;// the size of the array
-	
+	int arrIndex;// indicate the last element
+	int arrSize;// the size of the array
 };
 

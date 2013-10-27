@@ -81,10 +81,12 @@
     <ClCompile Include="item.cpp" />
     <ClCompile Include="itemList.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="recipeList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="item.h" />
     <ClInclude Include="itemList.h" />
+    <ClInclude Include="recipeList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

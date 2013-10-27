@@ -2,66 +2,76 @@
 
 #include <fstream>
 #include <iostream>
-#include <algorithm>
-#include <iomanip>
+#include <iomanip> //cout setw()
+#include <algorithm> //std::find
 
 //constructor
 itemList::itemList(void)
 {
-	arrList = new item[10];
-	arrIndex = 0;// indicate the last element
-	arrSize = 10;// the size of the array
+	vector<item> list;
+	list.reserve(10);
+	//item arrList = new item[10];
+	//arrIndex = 0;// indicate the last element
+	//arrSize = 10;// the size of the array
 }
 //destructor
 itemList::~itemList(void)
 {
-	delete[] arrList;
+	//delete[] arrList;
 }
 //opens an existing file into the array
 bool itemList::openList(string fileName)//Erick and Grant
 {
-
 	return true; //return true if the file exists, false if it doesn't
 }
 //adds an item to the end of the item list
-void itemList::addList(string name, int size)
+void itemList::addListItem(string name, int size, string unit)
 {
 	//need to check if the size reaches the limit or not
-	arrList[arrIndex] = item(name, size);
-	arrIndex++;
+	list.end();
+	list.push_back(item(name, size, unit));
+ 	//arrList[arrIndex] = item(name, size);
+	//arrIndex++;
 }
 //removes an item from the List
-void itemList::removeList(string itemName, int numToRemove) //Josh and Vikash
+void itemList::removeListItem(string itemName, int numToRemove) //Josh and Vikash
 {
-	//std::find(arrList[1].getName(), arrList[arrIndex].getName(), name); //idk how to use this...
-	int location = 1;
+	int location = 0;
 	//searches for the specified item
-	for (int x = 0; x < arrIndex; x++)
+	for (unsigned int x = 0; x <= list.size(); x++)
 	{
-		if (itemName == arrList[x].getName())
+		if (itemName == list[location].getName())
 		{
 			location = x;
 			break;
 		}
 	}
-	arrList[location].setSize(arrList[location].getSize() - numToRemove);
+	
+	list[location].setSize(list[location].getSize() - numToRemove);
+	//arrList[location].setSize(arrList[location].getSize() - numToRemove);
 
-	if (arrList[location].getSize() == 0)
+	if (list[location].getSize() == 0)
 	{
-		//arrList[location].erase(); //this doesn't work?
+		list.erase(list.begin() + location);
+		//delete &arrList[location];
 	}
 }
 //Sorts the List array using insertion sort
 void itemList::sortList() //Arthur and Karen
 {
-	for (int i = 0; i < arrIndex; i++) 
+	for (int i = 0; i < list.size(); i++) 
 	{
-		string key = arrList[i].getName();
-		for (int j = i - 1; j >= 0 && (arrList[j].getName()).compare(key) > 0; j--) 
+		string key = list[i].getName();
+		//string key = arrList[i].getName();
+		//for (int j = i - 1; j >= 0 && (arrList[j].getName()).compare(key) > 0; j--) 
+		for (int j = i-1; j >= 0 && (list[j].getName()).compare(key) > 0; j--)
 		{
-			item temp = arrList[j + 1];
+			item temp = list[j + 1];
+			list[j + 1] = list[j];
+			list[j] = temp;
+			/*item temp = arrList[j + 1];
 			arrList[j + 1] = arrList[j];
-			arrList[j] = temp;
+			arrList[j] = temp;*/
 		}
 	}
 }
@@ -73,23 +83,23 @@ void itemList::saveList(string fileName)
 	cout << "The full filename is " << fileName << "\n";
 	myFile.open(fileName);
 
-	for (int i = 0; i < arrIndex; i++)
+	for (unsigned int i = 0; i < list.size(); i++)
 	{
-		myFile << arrList[i].getName() << " , " << arrList[i].getSize() << "\n";
+		myFile << list[i].getName() << " , " << list[i].getSize() << "\n";
 	}
 	myFile.close();
 	cout << "Inventory List has been saved. :D" << endl;
 	viewList();
 }
 //outputs the array into a readable format
-void itemList::viewList()
+void itemList::viewList() const
 {
 	//need to add legnths for amount and units
 	string itemHeader = "Item name", separator = " | ", amountHeader = "Amount", unitHeader = "Units";
 	int longestItemName = itemHeader.length(), totalLength = itemHeader.length() + (2 *separator.length()) + amountHeader.length() + unitHeader.length();
-	for (int x = 0; x < arrIndex; x++)
+	for (int x = 0; x < list.size(); x++)
 	{
-		string name = arrList[x].getName();
+		string name = list[x].getName();
 		int length = name.length();
 
 		if (length > longestItemName)
@@ -103,8 +113,8 @@ void itemList::viewList()
 		cout << "-";
 	}
 	cout << "\n";
-	for (int x = 0; x < arrIndex; x++)
+	for (int x = 0; x < list.size(); x++)
 	{
-		cout << setw(longestItemName) << arrList[x].getName() << separator << arrList[x].getSize() << "\n";
+		cout << setw(longestItemName) << list[x].getName() << separator << list[x].getSize() << "\n";
 	}
 }
