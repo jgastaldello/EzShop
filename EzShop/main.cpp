@@ -5,19 +5,39 @@ Created by: Joshua Gastaldello, [add your names here]
 */
 
 /*
-TODO:
+TO-DO:
 - user menu
-- remove items (Josh, Vikash)
-- load items from file (Erick, Grant)
-- change itemList to itemList
-- change inventory to list
+	- inventory
+		- add item
+		- remove item
+		- save inventory
+		- save inventory as...
+		- open inventory...
+	- recipe
+		- add recipe [will save the recipe to its own file at the end of function]
+		- use recipe
+		- remove recipe
+		- save all recipe's
+		- open inventory...
+	- main
+		- open existing inventory
+		- open existing recipe(s)
+		- view inventory list
+		- view a recipe [function to choose one]
+		- manage inventory {goes to inventory menu}
+		- manage recipies {goes to recipe menu}
+- load items from file [itemList.cpp] (Erick, Grant)
+- recipe.h and .cpp
 */
 
 //DO NOT INSERT ANY CLEAR SCREENS UNTIL THE PROGRAMMING IS COMPLETE!
+//always call sortList() before you viewList() or saveList()!
+//update the todo list!!!!!!
 
 #include "itemList.h"
 #include "item.h"
 #include <iostream>
+#include <limits.h>
 
 //gets a Y or N input and returns T or F
 bool yesOrNo()
@@ -72,12 +92,23 @@ void start(itemList &inventoryList, bool &choice)
 		chooseFile(inventoryList);
 	}
 }
-void viewInventory(itemList &inventoryList)
+//prints the inventory list
+void displayInventory(itemList &inventoryList)
 {
-	cout << "";
+	cout << "\nHere is your current inventory:\n\n";
+	inventoryList.viewList();
+	cout << "\n";
 }
-void menu(bool listSaved, itemList &inventoryList)
+void mainMenu(bool listSaved, itemList &inventoryList)
 {
+	/*-main
+		- open existing inventory
+		- open existing recipe(s)
+		- view inventory list
+		- view a recipe[function to choose one]
+		- manage inventory{ goes to inventory menu }
+		-manage recipies{ goes to recipe menu }*/
+
 	int totalMenuItems = 0;
 	cout << ++totalMenuItems << ": Add items\n";
 	cout << ++totalMenuItems << ": Remove items\n";
@@ -100,17 +131,17 @@ void menu(bool listSaved, itemList &inventoryList)
 		break;
 	case 3:
 		//view items
-		cout << "\n";
-		inventoryList.viewList();
+		displayInventory(inventoryList);
 		break;
 	case 4:
 		//save list
+		inventoryList.saveList("inventory");
 		break;
 	case 5:
 		//save list as...
 		break;
 	case 6:
-		//open file as...
+		//open file...
 		break;
 	default:
 		break;
@@ -122,7 +153,7 @@ int main()
 	bool listSaved = false;
 	start(inventoryList,listSaved);
 	cout << "\n";
-	
+
 	//itemList testList = itemList();
 	//inventory apple = inventory("apple", 5);
 	//apple.setSize(10);
@@ -137,14 +168,16 @@ int main()
 	inventoryList.addListItem("laptop", 3, "items");
 	inventoryList.addListItem("phone", 100, "items");
 	inventoryList.addListItem("milk", 2, "2L jugs");
-	inventoryList.addListItem("coke", 24, "cans");
-	inventoryList.addListItem("storage", 1024, "gigabytes");
+	inventoryList.addListItem("coke", 12, "1");
+	inventoryList.addListItem("storage", 1024, "bytes");
+	inventoryList.addListItem("keyboards", 3, "items");
 
-	//inventoryList.removeListItem("ppt file", 10);
-	//inventoryList.removeListItem("peach", 1);
+	inventoryList.removeListItem("ppt file", 10);
+	inventoryList.removeListItem("peach", 1);
 	inventoryList.sortList();
+	inventoryList.saveList("inventory");
 
-	menu(listSaved, inventoryList);
+	mainMenu(listSaved, inventoryList);
 
 	system("pause");
 	return 0;

@@ -6,16 +6,16 @@ class item
 {
 	public:
 		item(void);
-		item(string n, int s, string u);
+		item(string n, unsigned long s, string u);
 		~item(void);
 		void setName(string n);
-		void setSize(int s);
+		void setAmount(int s);
 		void setUnit(string u);
 		string getName() const;
-		int getSize() const;
+		unsigned long getAmount() const;
 		string item::getUnit() const;
 	private:
-		int size;
+		unsigned long amount;
 		string name;
 		string unit;
 };

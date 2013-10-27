@@ -9,7 +9,7 @@
 itemList::itemList(void)
 {
 	vector<item> list;
-	list.reserve(10);
+	//list.reserve(10);
 	//item arrList = new item[10];
 	//arrIndex = 0;// indicate the last element
 	//arrSize = 10;// the size of the array
@@ -25,32 +25,32 @@ bool itemList::openList(string fileName)//Erick and Grant
 	return true; //return true if the file exists, false if it doesn't
 }
 //adds an item to the end of the item list
-void itemList::addListItem(string name, int size, string unit)
+void itemList::addListItem(string name, unsigned long amount, string unit)
 {
-	//need to check if the size reaches the limit or not
+	//need to check if the item exists already
 	list.end();
-	list.push_back(item(name, size, unit));
+	list.push_back(item(name, amount, unit));
  	//arrList[arrIndex] = item(name, size);
 	//arrIndex++;
 }
 //removes an item from the List
-void itemList::removeListItem(string itemName, int numToRemove) //Josh and Vikash
+void itemList::removeListItem(string itemName, unsigned long amountToRemove) //Josh and Vikash
 {
 	int location = 0;
 	//searches for the specified item
 	for (unsigned int x = 0; x <= list.size(); x++)
 	{
-		if (itemName == list[location].getName())
+		if (itemName == list[x].getName())
 		{
 			location = x;
 			break;
 		}
 	}
 	
-	list[location].setSize(list[location].getSize() - numToRemove);
+	list[location].setAmount(list[location].getAmount() - amountToRemove);
 	//arrList[location].setSize(arrList[location].getSize() - numToRemove);
 
-	if (list[location].getSize() == 0)
+	if (list[location].getAmount() == 0)
 	{
 		list.erase(list.begin() + location);
 		//delete &arrList[location];
@@ -59,7 +59,7 @@ void itemList::removeListItem(string itemName, int numToRemove) //Josh and Vikas
 //Sorts the List array using insertion sort
 void itemList::sortList() //Arthur and Karen
 {
-	for (int i = 0; i < list.size(); i++) 
+	for (unsigned int i = 0; i < list.size(); i++)
 	{
 		string key = list[i].getName();
 		//string key = arrList[i].getName();
@@ -85,36 +85,80 @@ void itemList::saveList(string fileName)
 
 	for (unsigned int i = 0; i < list.size(); i++)
 	{
-		myFile << list[i].getName() << " , " << list[i].getSize() << "\n";
+		myFile << list[i].getName() << " , " << list[i].getAmount() << " , " << list[i].getUnit()<< "\n";
 	}
 	myFile.close();
-	cout << "Inventory List has been saved. :D" << endl;
-	viewList();
 }
 //outputs the array into a readable format
 void itemList::viewList() const
 {
-	//need to add legnths for amount and units
+	//header
 	string itemHeader = "Item name", separator = " | ", amountHeader = "Amount", unitHeader = "Units";
-	int longestItemName = itemHeader.length(), totalLength = itemHeader.length() + (2 *separator.length()) + amountHeader.length() + unitHeader.length();
-	for (int x = 0; x < list.size(); x++)
-	{
-		string name = list[x].getName();
-		int length = name.length();
+	//sets the size as the header itself
+	int longestItemName = itemHeader.length(), longestAmountName = amountHeader.length(), longestUnitName = unitHeader.length();
+	//total header legnth 
+	int totalLength = 2 * separator.length();
 
-		if (length > longestItemName)
+	for (unsigned int i = 1; i <= 3; i++)
+	{
+		for (unsigned int x = 0; x < list.size(); x++)
 		{
-			longestItemName = length;
+			string header;
+			int stringLength;
+			if (i == 1)
+			{
+				header = list[x].getName();
+				stringLength = header.length();
+
+				if (stringLength > longestItemName)
+				{
+					longestItemName = stringLength;
+				}
+			}
+			else if (i == 2)
+			{
+				header = to_string(list[x].getAmount()); //to_stirng converts number to string
+				stringLength = header.length();
+
+				if (stringLength > longestAmountName)
+				{
+					longestAmountName = stringLength;
+				}
+			}
+			else if (i == 3)
+			{
+				header = list[x].getUnit();
+				stringLength = header.length();
+
+				if (stringLength > longestUnitName)
+				{
+					longestUnitName = stringLength;
+				}
+			}
+			
 		}
 	}
-	cout << setw(longestItemName) << itemHeader << separator << amountHeader << separator << unitHeader << "\n";
-	for (int x = 1; x <= totalLength; x++)
+	//prints headers
+	cout << left;
+	cout << setw(longestItemName) << itemHeader << separator;
+	cout << setw(longestAmountName) << amountHeader << separator;
+	cout << setw(longestUnitName) << unitHeader << "\n";
+	totalLength += longestItemName + longestAmountName + longestUnitName;
+	for (unsigned int x = 1; x <= totalLength; x++)
 	{
 		cout << "-";
 	}
 	cout << "\n";
-	for (int x = 0; x < list.size(); x++)
+	//prints all the items in the list
+	for (unsigned int x = 0; x < list.size(); x++)
 	{
-		cout << setw(longestItemName) << list[x].getName() << separator << list[x].getSize() << "\n";
+		cout << left << setw(longestItemName) << list[x].getName() << separator;
+		cout << right << setw(longestAmountName) << list[x].getAmount() << separator;
+		cout << left << setw(longestUnitName) << list[x].getUnit() << "\n";
 	}
+	for (unsigned int x = 1; x <= totalLength; x++)
+	{
+		cout << "-";
+	}
+	cout << "\n";
 }

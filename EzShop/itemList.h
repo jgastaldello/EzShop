@@ -11,8 +11,8 @@ class itemList
 		itemList(void);
 		~itemList(void);
 		bool itemList::openList(string fileName);
-		void addListItem(string name, int size, string unit);
-		void removeListItem(string name, int size);
+		void addListItem(string name, unsigned long amount, string unit);
+		void removeListItem(string name, unsigned long amountToRemove);
 		void sortList();
 		void saveList(string fileName);
 		void viewList() const;

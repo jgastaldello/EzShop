@@ -3,12 +3,12 @@
 //constuctor
 item::item(void)
 {
-	size = 0;
+	amount = 0;
 	name = " ";
 }
-item::item(string n, int s, string u)
+item::item(string n, unsigned long s, string u)
 {
-	size = s;
+	amount = s;
 	name = n;
 	unit = u;
 }
@@ -21,9 +21,9 @@ void item::setName(string n)
 {
 	name = n;
 }
-void item::setSize(int s)
+void item::setAmount(int s)
 {
-	size = s;
+	amount = s;
 }
 void item::setUnit(string u)
 {
@@ -33,9 +33,9 @@ string item::getName() const
 {
 	return name;
 }
-int item::getSize() const
+unsigned long item::getAmount() const
 {
-	return size;
+	return amount;
 }
 string item::getUnit() const
 {
