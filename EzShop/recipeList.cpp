@@ -3,14 +3,12 @@
 //consturctor
 recipeList::recipeList(void)
 {
-	recipe =  new itemList [10];
-	arrIndex = 0;// indicate the last element
-	arrSize = 10;// the size of the array
+	vector<list> recipe;
 }
 //destructor
 recipeList::~recipeList(void)
 {
-	delete[] recipe;
+	
 }
 void recipeList:: addRecipe(string name)
 {
@@ -22,6 +20,7 @@ void  recipeList:: removeRecipe()
 }
 void recipeList:: sortRecipe()
 {
+
 }
 void recipeList:: saveRecipe()
 {
