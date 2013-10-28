@@ -39,6 +39,47 @@ TO-DO:
 #include <iostream>
 #include <limits.h>
 
+bool yesOrNo();
+int numberRangeChoice(int min, int max);
+void chooseFile(itemList &list);
+void start(itemList &inventoryList, bool &choice);
+void displayInventory(itemList &inventoryList);
+void mainMenu(bool listSaved, itemList &inventoryList);
+
+int main()
+{
+	
+	itemList inventoryList;
+	bool listSaved = false;
+	start(inventoryList,listSaved);
+	cout << "\n";
+
+/*
+	inventoryList.addListItem("apple", 5,"items");
+	inventoryList.addListItem("orange", 7, "items");
+	inventoryList.addListItem("peach", 1, "items");
+	inventoryList.addListItem("computer", 3, "items");
+	inventoryList.addListItem("ipod", 7, "items");
+	inventoryList.addListItem("ppt file", 50, "files");
+	inventoryList.addListItem("laptop", 3, "items");
+	inventoryList.addListItem("phone", 100, "items");
+	inventoryList.addListItem("milk", 2, "2L jugs");
+	inventoryList.addListItem("coke", 12, "1");
+	inventoryList.addListItem("storage", 1024, "bytes");
+	inventoryList.addListItem("keyboards", 3, "items");
+
+	inventoryList.removeListItem("ppt file", 10);
+	inventoryList.removeListItem("peach", 1);
+	inventoryList.sortList();
+	inventoryList.saveList("inventory");
+*/
+	mainMenu(listSaved, inventoryList);
+
+
+	system("pause");
+	return 0;
+}
+
 //gets a Y or N input and returns T or F
 bool yesOrNo()
 {
@@ -101,15 +142,22 @@ void displayInventory(itemList &inventoryList)
 }
 void mainMenu(bool listSaved, itemList &inventoryList)
 {
-	/*-main
+		/*-main
 		- open existing inventory
 		- open existing recipe(s)
 		- view inventory list
 		- view a recipe[function to choose one]
 		- manage inventory{ goes to inventory menu }
 		-manage recipies{ goes to recipe menu }*/
+	/*
+	Arthur -main
+		- manage inventory {goes to inventory menu}
+		- manage recipies {goes to recipe menu}
+		- manage shopping list {goes to recipe menu}
+	*/
 
-	int totalMenuItems = 0;
+	int totalMenuItems = 0;// user option
+	/*
 	cout << ++totalMenuItems << ": Add items\n";
 	cout << ++totalMenuItems << ": Remove items\n";
 	cout << ++totalMenuItems << ": View items\n";
@@ -117,6 +165,11 @@ void mainMenu(bool listSaved, itemList &inventoryList)
 	cout << ++totalMenuItems << ": Save as...\n";
 	cout << ++totalMenuItems << ": Open file...\n";
 	cout << ++totalMenuItems << ": Quit\n";
+	*/
+	cout << ++totalMenuItems << ": manage inventory\n";
+	cout << ++totalMenuItems << ": manage recipes\n";
+	cout << ++totalMenuItems << ": manage shopping list\n";
+	cout << ++totalMenuItems << ": Quit"<<endl;
 
 	cout << "\nChoose a task: ";
 	int task = numberRangeChoice(1, totalMenuItems);
@@ -124,61 +177,22 @@ void mainMenu(bool listSaved, itemList &inventoryList)
 	switch (task)
 	{
 	case 1:
-		//add items 
+		//manage inventory
+		inventoryManage();
 		break;
 	case 2:
-		//remove items
+		//manage recipes
 		break;
 	case 3:
-		//view items
-		displayInventory(inventoryList);
+		//manage shopping list
+		
 		break;
 	case 4:
-		//save list
-		inventoryList.saveList("inventory");
-		break;
-	case 5:
-		//save list as...
-		break;
-	case 6:
-		//open file...
+		//Quit
+		
 		break;
 	default:
+		cout <<"Error: MENU default case\n";
 		break;
 	}
-}
-int main()
-{
-	itemList inventoryList;
-	bool listSaved = false;
-	start(inventoryList,listSaved);
-	cout << "\n";
-
-	//itemList testList = itemList();
-	//inventory apple = inventory("apple", 5);
-	//apple.setSize(10);
-	//apple.setName("APPLE");
-
-	inventoryList.addListItem("apple", 5,"items");
-	inventoryList.addListItem("orange", 7, "items");
-	inventoryList.addListItem("peach", 1, "items");
-	inventoryList.addListItem("computer", 3, "items");
-	inventoryList.addListItem("ipod", 7, "items");
-	inventoryList.addListItem("ppt file", 50, "files");
-	inventoryList.addListItem("laptop", 3, "items");
-	inventoryList.addListItem("phone", 100, "items");
-	inventoryList.addListItem("milk", 2, "2L jugs");
-	inventoryList.addListItem("coke", 12, "1");
-	inventoryList.addListItem("storage", 1024, "bytes");
-	inventoryList.addListItem("keyboards", 3, "items");
-
-	inventoryList.removeListItem("ppt file", 10);
-	inventoryList.removeListItem("peach", 1);
-	inventoryList.sortList();
-	inventoryList.saveList("inventory");
-
-	mainMenu(listSaved, inventoryList);
-
-	system("pause");
-	return 0;
 }
