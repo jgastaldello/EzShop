@@ -4,7 +4,8 @@
 item::item(void)
 {
 	amount = 0;
-	name = " ";
+	name = "";
+	unit = "";
 }
 item::item(string n, unsigned long s, string u)
 {
