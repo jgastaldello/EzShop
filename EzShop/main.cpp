@@ -178,14 +178,13 @@ void mainMenu(bool listSaved, itemList &inventoryList)
 	{
 	case 1:
 		//manage inventory
-		inventoryManage();
+		//inventoryManage();
 		break;
 	case 2:
 		//manage recipes
 		break;
 	case 3:
 		//manage shopping list
-		
 		break;
 	case 4:
 		//Quit

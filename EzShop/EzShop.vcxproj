@@ -81,7 +81,6 @@
     <ClCompile Include="item.cpp" />
     <ClCompile Include="itemList.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="recipeList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="item.h" />

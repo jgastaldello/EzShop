@@ -24,9 +24,6 @@
     <ClCompile Include="itemList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="recipeList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="item.h">
