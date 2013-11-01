@@ -17,7 +17,6 @@ public:
 private:
 	itemList* recipe;
 	string recipeName;
-	int arrIndex;// indicate the last element
-	int arrSize;// the size of the array
+	
 };
 
