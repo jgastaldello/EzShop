@@ -44,6 +44,7 @@ int numberRangeChoice(int min, int max);
 void chooseFile(itemList &list);
 void start(itemList &inventoryList, bool &choice);
 void displayInventory(itemList &inventoryList);
+void manageInventory(itemList &inventoryList);
 void mainMenu(bool listSaved, itemList &inventoryList);
 
 int main()
@@ -140,6 +141,70 @@ void displayInventory(itemList &inventoryList)
 	inventoryList.viewList();
 	cout << "\n";
 }
+//manage inventory
+void manageInventory(itemList &inventoryList) {
+	cout << "\nWhat would you like to do?\n";
+
+	int inventoryOptions = 0;
+
+	cout << ++inventoryOptions << ": Add item to inventory\n";
+	cout << ++inventoryOptions << ": Remove item to inventory\n";
+	cout << ++inventoryOptions << ": Display inventory\n";
+
+	cout << "\n";
+	cout << "Choose a task: ";
+	int task = numberRangeChoice(1, inventoryOptions);
+	cout << "\n";
+
+	if (task == 1) {
+		bool contInput = 1;
+		while (contInput) {
+			cout << "Enter an item name: ";
+			string name = " ";
+			cin >> name;
+
+			cout << "Enter the item amount: ";
+			unsigned int amount = 0;
+			cin >> amount;
+
+			cout << "Enter the item unit: ";
+			string unit = " ";
+			cin >> unit;
+
+			inventoryList.addListItem(name, amount, unit);
+
+			cout << "Would you like to input another item? ";
+			bool choice = yesOrNo();
+			contInput = choice;
+		}
+		inventoryList.sortList();
+		inventoryList.saveList("inventory");
+	}
+	else if (task == 2){
+		bool contInput = 1;
+		while (contInput) {
+			cout << "Enter an item name: ";
+			string name = " ";
+			cin >> name;
+
+			cout << "Enter the amount to remove: ";
+			unsigned int amount = 0;
+			cin >> amount;
+
+			inventoryList.removeListItem(name, amount);
+
+			cout << "Would you like to remove another item? ";
+			bool choice = yesOrNo();
+			contInput = choice;
+		}
+		inventoryList.sortList();
+		inventoryList.saveList("inventory");
+	}
+	else if(task == 3){
+		displayInventory(inventoryList);
+	}
+
+}
 void mainMenu(bool listSaved, itemList &inventoryList)
 {
 		/*-main
@@ -173,12 +238,13 @@ void mainMenu(bool listSaved, itemList &inventoryList)
 
 	cout << "\nChoose a task: ";
 	int task = numberRangeChoice(1, totalMenuItems);
+	cout << "\n";
 
 	switch (task)
 	{
 	case 1:
 		//manage inventory
-		//inventoryManage();
+		manageInventory(inventoryList);
 		break;
 	case 2:
 		//manage recipes
