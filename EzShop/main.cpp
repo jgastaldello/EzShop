@@ -112,13 +112,23 @@ int numberRangeChoice(int min, int max)
 //opens an inventory file
 void chooseFile(itemList &list)
 {
+	// Asks for file name
 	string fileName;
-	cout << "\nEnter your file name (no extension): ";
+	cout << "\nEnter your file name (with extension): ";  //<-- doesn't work without extension
 	getline(cin, fileName);
+	bool check = list.openList(fileName);
 
-	while (!list.openList(fileName))
+	// If file name is invalid, continues to ask for file name
+	while (!check)
 	{
-		cout << "File does not exist!\n";
+		//cout << "File not found\n";
+		string fileName;
+		cout << "\nEnter your file name (with extension): ";
+		getline(cin, fileName);
+		if (list.openList(fileName)){
+			check = 1;
+		}
+		
 	}
 }
 //displays welcome and opens existing inventory
