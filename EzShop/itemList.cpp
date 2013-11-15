@@ -26,10 +26,10 @@ bool itemList::openList(string fileName)//Erick and Grant
 	// Check if file opened correctly
 	if (ist.fail())
 	{
-		cout << "file not found\n";
+		cout << "File not found\n";
 		return false;
 	}
-	cout << "file is here :D\n";
+	cout << "File is here :D\n";
 	string itemName, itemUnit, comma;
 	int itemSize;
 
