@@ -22,6 +22,24 @@ itemList::~itemList(void)
 //opens an existing file into the array
 bool itemList::openList(string fileName)//Erick and Grant
 {
+	ifstream ist(fileName.c_str()); // open file
+	// Check if file opened correctly
+	if (ist.fail())
+	{
+		cout << "file not found\n";
+		return false;
+	}
+	cout << "file is here :D\n";
+	string itemName, itemUnit, comma;
+	int itemSize;
+
+	while (ist >> itemName >> comma >> itemSize >> comma >> itemUnit)
+	{
+
+		//cout<< itemName<<comma<<itemSize<<comma<<itemUnit<<"\n";
+		addListItem(itemName, itemSize, itemUnit);
+	}
+
 	return true; //return true if the file exists, false if it doesn't
 }
 //adds an item to the end of the item list
