@@ -1,158 +1,141 @@
 #include "recipeList.h"
+#include <fstream>
+#include <iostream>
+#include <iomanip> //cout setw()
+#include <algorithm> //std::find
+#include <stdio.h>
 
-//consturctor
+using namespace std;
+
 recipeList::recipeList(void)
 {
-	vector<list> recipe;
+	vector<string> recipe;
 }
-//destructor
+
 recipeList::~recipeList(void)
 {
-	
 }
-void recipeList:: addRecipe(string name, unsigned long amount, string unit)
-{
-	//add a recipe(itemList into the recipeList)
-	
-	//need to check if the item exists already
-        list.end();
-        list.push_back(item(name, amount, unit));
-         //arrList[arrIndex] = item(name, size);
-        //arrIndex++;
-	
-}
-void  recipeList:: removeRecipe(string itemName, unsigned long amountToRemove)
-{
-	//remove a recipe(itemList into the recipeList)
-	
-	int location = 0;
-        //searches for the specified item
-        for (unsigned int x = 0; x <= list.size(); x++)
-        {
-                if (itemName == list[x].getName())
-                {
-                        location = x;
-                        break;
-                }
-        }
-        
-        list[location].setAmount(list[location].getAmount() - amountToRemove);
-        //arrList[location].setSize(arrList[location].getSize() - numToRemove);
 
-        if (list[location].getAmount() == 0)
-        {
-                list.erase(list.begin() + location);
-                //delete &arrList[location];
-        }
+void recipeList:: addRecipe(string name)
+{
+	//save the recipe on the list	
+	int location = searchRecipe(name);
+	if (location == -1){
+		//try to open it
+		//load it
+		ifstream ist(name.c_str()); // open file
+		// Check if file opened correctly
+		if (ist.fail())
+		{
+			cout << "Recipe: "<<name<< " not found\n";
+			return;
+		}
+
+		recipe.end();
+		recipe.push_back(name);
+	}else{
+		cout<< name << " is on the recipeList already." <<"\n";
+	}
+
+}
+void  recipeList:: removeRecipe(string name)
+{
+	int location = searchRecipe(name);	
+	recipe.erase(recipe.begin() + location);
 	
+	//http://www.cplusplus.com/reference/cstdio/remove/
+	if(remove(name.c_str()) != 0 ){
+		perror( "Error deleting file \n");
+	}else{
+		puts( "File successfully deleted" );
+	}
+	
+ 
 }
 void recipeList:: sortRecipe()
 {
-	
-	for (unsigned int i = 0; i < list.size(); i++)
-        {
-                string key = list[i].getName();
-                //string key = arrList[i].getName();
-                //for (int j = i - 1; j >= 0 && (arrList[j].getName()).compare(key) > 0; j--)
-                for (int j = i-1; j >= 0 && (list[j].getName()).compare(key) > 0; j--)
-                {
-                        item temp = list[j + 1];
-                        list[j + 1] = list[j];
-                        list[j] = temp;
-                        /*item temp = arrList[j + 1];
-                        arrList[j + 1] = arrList[j];
-                        arrList[j] = temp;*/
-                }
-        }
-
+	//just sort it
+	for (unsigned int i = 0; i < recipe.size(); i++)
+	{
+		string key = recipe[i];		 
+		for (int j = i-1; j >= 0 && (recipe[j]).compare(key) > 0; j--)
+		{
+			string temp = recipe[j + 1];
+			recipe[j + 1] = recipe[j];
+			recipe[j] = temp;			
+		}
+	}
 }
-void recipeList:: saveRecipe(string filename)
+void recipeList:: saveRecipe()
 {
+	string fileName = "recipeList";
+	//update the file
 	ofstream myFile;
-        fileName.append(".csv");
-        cout << "The full filename is " << fileName << "\n";
-        myFile.open(fileName);
+	fileName.append(".csv");
+	cout << "The full filename is " << fileName << "\n";
+	myFile.open(fileName);
 
-        for (unsigned int i = 0; i < list.size(); i++)
-        {
-                myFile << list[i].getName() << " , " << list[i].getAmount() << " , " << list[i].getUnit()<< "\n";
-        }
-        myFile.close();
+	for (unsigned int i = 0; i < recipe.size(); i++)
+	{
+		myFile << recipe[i]<< "\n";
+	}
+	myFile.close();
 }
 void recipeList::viewRecipe()
 {
-	
-	//header
-        string itemHeader = "Item name", separator = " | ", amountHeader = "Amount", unitHeader = "Units";
-        //sets the size as the header itself
-        int longestItemName = itemHeader.length(), longestAmountName = amountHeader.length(), longestUnitName = unitHeader.length();
-        //total header legnth
-        int totalLength = 2 * separator.length();
+	//view it	
+	for ( int i = 0 ; i < recipe.size() ; i++)
+	{
+		viewRecipe(recipe[i]);
+	}
 
-        for (unsigned int i = 1; i <= 3; i++)
-        {
-                for (unsigned int x = 0; x < list.size(); x++)
-                {
-                        string header;
-                        int stringLength;
-                        if (i == 1)
-                        {
-                                header = list[x].getName();
-                                stringLength = header.length();
-
-                                if (stringLength > longestItemName)
-                                {
-                                        longestItemName = stringLength;
-                                }
-                        }
-                        else if (i == 2)
-                        {
-                                header = to_string(list[x].getAmount()); //to_stirng converts number to string
-                                stringLength = header.length();
-
-                                if (stringLength > longestAmountName)
-                                {
-                                        longestAmountName = stringLength;
-                                }
-                        }
-                        else if (i == 3)
-                        {
-                                header = list[x].getUnit();
-                                stringLength = header.length();
-
-                                if (stringLength > longestUnitName)
-                                {
-                                        longestUnitName = stringLength;
-                                }
-                        }
-                        
-                }
-        }
-        //prints headers
-        cout << left;
-        cout << setw(longestItemName) << itemHeader << separator;
-        cout << setw(longestAmountName) << amountHeader << separator;
-        cout << setw(longestUnitName) << unitHeader << "\n";
-        totalLength += longestItemName + longestAmountName + longestUnitName;
-        for (unsigned int x = 1; x <= totalLength; x++)
-        {
-                cout << "-";
-        }
-        cout << "\n";
-        //prints all the items in the list
-        for (unsigned int x = 0; x < list.size(); x++)
-        {
-                cout << left << setw(longestItemName) << list[x].getName() << separator;
-                cout << right << setw(longestAmountName) << list[x].getAmount() << separator;
-                cout << left << setw(longestUnitName) << list[x].getUnit() << "\n";
-        }
-        for (unsigned int x = 1; x <= totalLength; x++)
-        {
-                cout << "-";
-        }
-        cout << "\n";
-	
 }
-void  recipeList::loadRecipe()
+
+void recipeList::viewRecipe(string name)
 {
+	//view it
+	//header	
+	cout << "Recipe name: " << name <<" \n";
+	//view the file
+	itemList tmpRecipe;
+	tmpRecipe.openList(name);
+	tmpRecipe.viewList();
+	
+
 }
+bool recipeList::loadRecipe()
+{
+	string fileName = "recipeList.csv";
+	//load it
+	ifstream ist(fileName.c_str()); // open file
+	// Check if file opened correctly
+	if (ist.fail())
+	{
+		cout << "File not found\n";
+		return false;
+	}
+	//cout << "File is here :D\n";
+	string recipeName;
+	int itemSize;
+
+	while (ist >> recipeName)
+	{		
+		addRecipe(recipeName);
+	}
+
+	return true; //return true if the file exists, false if it doesn't
+}
+
+int recipeList::searchRecipe(string target) const
+{
+	for (int i = 0; i < recipe.size() ; i++)
+	{
+		string item = recipe[i];
+		if (item == target)
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+
