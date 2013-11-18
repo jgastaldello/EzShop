@@ -1,22 +1,24 @@
-#pragma once
-#include "itemList.h"
 #include <string>
-
-
+#include "itemList.h"
+#pragma once
 class recipeList
 {
 public:
 	recipeList(void);
 	~recipeList(void);
 	void addRecipe(string name);
-	void removeRecipe();
+	void removeRecipe(string name);
 	void sortRecipe();
 	void saveRecipe();
 	void viewRecipe();
-	void loadRecipe();
+	void viewRecipe(string name);
+	bool loadRecipe();
+	int searchRecipe(string target) const;
+	
 private:
-	itemList* recipe;
+	vector<string> recipe;
 	string recipeName;
+
 	
 };
 
