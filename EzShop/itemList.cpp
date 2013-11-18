@@ -46,10 +46,23 @@ bool itemList::openList(string fileName)//Erick and Grant
 void itemList::addListItem(string name, unsigned long amount, string unit)
 {
 	//need to check if the item exists already
-	list.end();
-	list.push_back(item(name, amount, unit));
- 	//arrList[arrIndex] = item(name, size);
-	//arrIndex++;
+	int location = searchList(name);
+	if (location == -1)
+	{
+		list.end();
+		list.push_back(item(name, amount, unit));
+	}else{
+		if(list[location].getUnit() == unit){
+			int tmpSize = list[location].getAmount();
+			tmpSize += amount;
+			list[location].setAmount(tmpSize);
+		}else{
+			list.end();
+			list.push_back(item(name, amount, unit));
+		}
+		
+	}
+ 
 }
 //removes an item from the List
 void itemList::removeListItem(string itemName, unsigned long amountToRemove) //Josh and Vikash
@@ -180,3 +193,18 @@ void itemList::viewList() const
 	}
 	cout << "\n";
 }
+
+int itemList::searchList(string target) const
+{
+	for (int i = 0; i < list.size() ; i++)
+	{
+		string item = list[i].getName();
+		if (item == target)
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+
+
