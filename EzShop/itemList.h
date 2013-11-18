@@ -17,6 +17,7 @@ class itemList
 		void saveList(string fileName);
 		void viewList() const;
 		void loadList();
+		int searchList(string target) const;
 	private:
 		vector<item> list;
 };
