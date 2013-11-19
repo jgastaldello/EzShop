@@ -18,6 +18,7 @@ class itemList
 		void viewList() const;
 		void loadList();
 		int searchList(string target) const;
-	private:
+		bool isEmpty(void) const;
 		vector<item> list;
+		
 };
