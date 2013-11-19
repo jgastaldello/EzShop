@@ -111,7 +111,7 @@ bool recipeList::loadRecipe()
 	// Check if file opened correctly
 	if (ist.fail())
 	{
-		cout << "File not found\n";
+		cout << "File : "<<fileName<<" not found\n";
 		return false;
 	}
 	//cout << "File is here :D\n";
