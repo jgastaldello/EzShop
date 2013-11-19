@@ -6,14 +6,21 @@
 #include <stdio.h>
 
 using namespace std;
-
+//constructor
 recipeList::recipeList(void)
 {
 	vector<string> recipe;
 }
-
+//destructor
 recipeList::~recipeList(void)
 {
+}
+//not supported yet....
+//... not sure if we need it
+//.......create a recipe from empty
+void recipeList:: createRecipe(string name)
+{
+	cout<<" \n\n\n\nThis is not supported at all\n\n\n\n";
 }
 
 void recipeList:: addRecipe(string name)
@@ -38,6 +45,7 @@ void recipeList:: addRecipe(string name)
 	}
 
 }
+//remove a recipe from the list and the file
 void  recipeList:: removeRecipe(string name)
 {
 	int location = searchRecipe(name);	
@@ -52,6 +60,7 @@ void  recipeList:: removeRecipe(string name)
 	
  
 }
+	//re-order the list in alphabetical order 
 void recipeList:: sortRecipe()
 {
 	//just sort it
@@ -66,6 +75,7 @@ void recipeList:: sortRecipe()
 		}
 	}
 }
+//save the recipeList into recipeList.csv
 void recipeList:: saveRecipe()
 {
 	string fileName = "recipeList";
@@ -81,16 +91,17 @@ void recipeList:: saveRecipe()
 	}
 	myFile.close();
 }
+//display the all of the recipe
 void recipeList::viewRecipe()
 {
-	//view it	
+	//view them	
 	for ( int i = 0 ; i < recipe.size() ; i++)
 	{
 		viewRecipe(recipe[i]);
 	}
 
 }
-
+//display specific recipe (given the name of the recipe)
 void recipeList::viewRecipe(string name)
 {
 	//view it
@@ -103,6 +114,7 @@ void recipeList::viewRecipe(string name)
 	
 
 }
+//load a recipe
 bool recipeList::loadRecipe()
 {
 	string fileName = "recipeList.csv";
@@ -113,8 +125,7 @@ bool recipeList::loadRecipe()
 	{
 		cout << "File : "<<fileName<<" not found\n";
 		return false;
-	}
-	//cout << "File is here :D\n";
+	}	
 	string recipeName;
 	int itemSize;
 
@@ -125,7 +136,7 @@ bool recipeList::loadRecipe()
 
 	return true; //return true if the file exists, false if it doesn't
 }
-
+//search a recipe from the list, return -1 if not finding it
 int recipeList::searchRecipe(string target) const
 {
 	for (int i = 0; i < recipe.size() ; i++)
@@ -137,5 +148,10 @@ int recipeList::searchRecipe(string target) const
 		}
 	}
 	return -1;
+}
+//check if the recipeList empty
+bool recipeList::isEmpty() const
+{
+	return (recipe.size() == 0);
 }
 
