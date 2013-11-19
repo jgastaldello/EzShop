@@ -123,6 +123,12 @@ void itemList::saveList(string fileName)
 //outputs the array into a readable format
 void itemList::viewList() const
 {
+	//There are nothing to view if it is empty
+	if (isEmpty())
+	{
+		cout<<"SORRY: The List is empty. \n";
+		return;
+	}
 	//header
 	string itemHeader = "Item name", separator = " | ", amountHeader = "Amount", unitHeader = "Units";
 	//sets the size as the header itself
@@ -206,5 +212,10 @@ int itemList::searchList(string target) const
 	}
 	return -1;
 }
+bool itemList::isEmpty(void) const
+{
+	return (list.size()==0);
+}
+
 
 
