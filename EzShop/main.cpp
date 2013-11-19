@@ -160,12 +160,15 @@ void manageInventory(itemList &inventoryList) {
 	cout << ++inventoryOptions << ": Add item to inventory\n";
 	cout << ++inventoryOptions << ": Remove item to inventory\n";
 	cout << ++inventoryOptions << ": Display inventory\n";
+	cout << ++inventoryOptions << ": Go back\n";
 
 	cout << "\n";
 	cout << "Choose a task: ";
 	int task = numberRangeChoice(1, inventoryOptions);
-	cout << "\n";
+	cout << "\n"; 
 
+
+	// Adding to inventory
 	if (task == 1) {
 		bool contInput = 1;
 		while (contInput) {
@@ -190,6 +193,7 @@ void manageInventory(itemList &inventoryList) {
 		inventoryList.sortList();
 		inventoryList.saveList("inventory");
 	}
+	// Removing from inventory
 	else if (task == 2){
 		bool contInput = 1;
 		while (contInput) {
@@ -210,8 +214,13 @@ void manageInventory(itemList &inventoryList) {
 		inventoryList.sortList();
 		inventoryList.saveList("inventory");
 	}
+	// Display ingredients in inventory
 	else if(task == 3){
 		displayInventory(inventoryList);
+	}
+	// Go back to main menu
+	else if (task == 4){
+		mainMenu(inventoryList);
 	}
 
 }
