@@ -1,14 +1,19 @@
 #include "shoppingList.h"
 
 using namespace std;
+//default constructor
+//...opening the required file
 shoppingList::shoppingList(void)
 {
 	//load the inventory and recipeList
 	inventory.openList("inventory.csv");
+	//load the RecipeList
 	recipe.loadRecipe();
 	//construct a shopList as itemList
 	shopList = itemList();
 }
+//overloaded constructor
+//...opening the required file and requires the fileName of inventoryList
 shoppingList::shoppingList(string inventoryList)
 {
 	//load the inventory and recipeList
@@ -19,8 +24,9 @@ shoppingList::shoppingList(string inventoryList)
 }
 shoppingList::~shoppingList(void)
 {
-
 }
+
+//compare the recipe and inventory, then generate a shopping list
 void shoppingList::compareList(string recipeName)
 {
 
@@ -34,8 +40,7 @@ void shoppingList::compareList(string recipeName)
 	}
 
 	//to compare the items on the recipe with inventory list
-
-	for (int i = 0 ; i < targetList.size(); i++)
+	for (int i = 0 ; i < targetList.list.size(); i++)
 	{
 		if (inventory.searchList(targetList.list[i].getName()) == -1)
 		{
