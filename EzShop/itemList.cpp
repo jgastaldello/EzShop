@@ -49,6 +49,11 @@ void itemList::addListItem(string name, unsigned long amount, string unit)
 	int location = searchList(name);
 	if (location == -1)
 	{
+		if (unit != "g" || unit != "kg" || unit != "mL" || unit != "L" )
+		{
+			cout<< "Sorry: This item will be not added \n TYPE: The unit "<< unit << "is not supported in this program. Please convert your unit in terms of g, kg, mL, or L.\n ";
+			return;
+		}
 		list.end();
 		list.push_back(item(name, amount, unit));
 	}else{
@@ -57,8 +62,32 @@ void itemList::addListItem(string name, unsigned long amount, string unit)
 			tmpSize += amount;
 			list[location].setAmount(tmpSize);
 		}else{
-			list.end();
-			list.push_back(item(name, amount, unit));
+			//need to change the unit
+			int tmpSize = list[location].getAmount();
+			if (unit == "kg" && list[location].getUnit() == "g")
+			{
+				tmpSize += amount * 1000;
+				
+			}else if (unit == "L" && list[location].getUnit() == "mL")
+			{
+				tmpSize += amount * 1000;				
+			}else if (unit == "g" && list[location].getUnit() == "kg")
+			{
+				tmpSize *= 1000;
+				tmpSize += amount;				
+				list[location].setUnit(unit);				
+
+			}else if (unit == "mL" && list[location].getUnit() == "L")
+			{
+				tmpSize *= 1000;
+				tmpSize += amount;			
+				list[location].setUnit(unit);
+			}else{
+				cout<< "Sorry: This item will be not added \n TYPE: The unit "<< unit << "and/or "<< list[location].getUnit() <<"is/are not supported in this program. Please convert your unit in terms of g, kg, mL, or L.\n ";
+				return;
+			}
+			list[location].setAmount(tmpSize);
+			
 		}
 		
 	}
