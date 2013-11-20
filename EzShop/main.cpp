@@ -152,13 +152,13 @@ void displayInventory(itemList &inventoryList)
 	cout << "\n";
 }
 //manage inventory
-void manageInventory(itemList &inventoryList) {
+void manageInventory(bool listSaved, itemList &inventoryList) {
 	cout << "\nWhat would you like to do?\n";
 
 	int inventoryOptions = 0;
 
 	cout << ++inventoryOptions << ": Add item to inventory\n";
-	cout << ++inventoryOptions << ": Remove item to inventory\n";
+	cout << ++inventoryOptions << ": Remove item from inventory\n";
 	cout << ++inventoryOptions << ": Display inventory\n";
 	cout << ++inventoryOptions << ": Go back\n";
 
@@ -170,47 +170,13 @@ void manageInventory(itemList &inventoryList) {
 
 	// Adding to inventory
 	if (task == 1) {
-		bool contInput = 1;
-		while (contInput) {
-			cout << "Enter an item name: ";
-			string name = " ";
-			cin >> name;
-
-			cout << "Enter the item amount: ";
-			unsigned int amount = 0;
-			cin >> amount;
-
-			cout << "Enter the item unit: ";
-			string unit = " ";
-			cin >> unit;
-
-			inventoryList.addListItem(name, amount, unit);
-
-			cout << "Would you like to input another item? ";
-			bool choice = yesOrNo();
-			contInput = choice;
-		}
+		addToInventory(inventoryList);
 		inventoryList.sortList();
 		inventoryList.saveList("inventory");
 	}
 	// Removing from inventory
 	else if (task == 2){
-		bool contInput = 1;
-		while (contInput) {
-			cout << "Enter an item name: ";
-			string name = " ";
-			cin >> name;
-
-			cout << "Enter the amount to remove: ";
-			unsigned int amount = 0;
-			cin >> amount;
-
-			inventoryList.removeListItem(name, amount);
-
-			cout << "Would you like to remove another item? ";
-			bool choice = yesOrNo();
-			contInput = choice;
-		}
+		removeFromInventory(inventoryList);
 		inventoryList.sortList();
 		inventoryList.saveList("inventory");
 	}
@@ -220,9 +186,55 @@ void manageInventory(itemList &inventoryList) {
 	}
 	// Go back to main menu
 	else if (task == 4){
-		mainMenu(inventoryList);
+		mainMenu(listSaved, inventoryList);
 	}
 
+}
+
+// Add to inventory
+void addToInventory(itemList &inventoryList)
+{
+	bool contInput = 1;
+	while (contInput) {
+		cout << "Enter an item name: ";
+		string name = " ";
+		cin >> name;
+
+		cout << "Enter the item amount: ";
+		unsigned int amount = 0;
+		cin >> amount;
+
+		cout << "Enter the item unit: ";
+		string unit = " ";
+		cin >> unit;
+
+		inventoryList.addListItem(name, amount, unit);
+
+		cout << "Would you like to input another item? ";
+		bool choice = yesOrNo();
+		contInput = choice;
+	}
+}
+
+// Remove from inventory
+void removeFromInventory(itemList &inventoryList)
+{
+	bool contInput = 1;
+	while (contInput) {
+		cout << "Enter an item name: ";
+		string name = " ";
+		cin >> name;
+
+		cout << "Enter the amount to remove: ";
+		unsigned int amount = 0;
+		cin >> amount;
+
+		inventoryList.removeListItem(name, amount);
+
+		cout << "Would you like to remove another item? ";
+		bool choice = yesOrNo();
+		contInput = choice;
+	}
 }
 void mainMenu(bool listSaved, itemList &inventoryList)
 {
