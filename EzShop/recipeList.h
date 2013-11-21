@@ -34,3 +34,4 @@ private:
 	//name of the recipes
 	vector<string> recipe;	
 };
+
