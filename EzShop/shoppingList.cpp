@@ -44,6 +44,7 @@ void shoppingList::compareList(string recipeName)
 	}else{
 		targetList.openList(recipeName);
 	}
+		
 
 	//to compare the items on the recipe with inventory list
 	for (int t = 0 ; t < targetList.list.size(); t++)
@@ -100,7 +101,8 @@ void shoppingList::compareList(string recipeName)
 		}
 
 	}
-	
+	inventory.list.end();
+	inventory.sortList();
 	//remove .csv for the file name
 	string delimiter = ".csv";
 	string noCsv = inventoryList.substr(0, inventoryList.find(delimiter));	
