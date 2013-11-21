@@ -202,11 +202,8 @@ void addToInventory(itemList &inventoryList)
 		string name = " ";
 		cin >> name;
 
-		cout << "Enter the item amount: ";
-		unsigned int amount = 0;
-		cin >> amount;
 
-		cout << "Enter the item unit: ";
+		cout << "Enter the item unit: (One of g, kg, mL, L)";
 		string unit = " ";
 		cin >> unit;
 
@@ -220,6 +217,9 @@ void addToInventory(itemList &inventoryList)
 			cin >> unit;
 		}
 
+		cout << "Enter the item amount: ";
+		unsigned int amount = 0;
+		cin >> amount;
 		inventoryList.addListItem(name, amount, unit);
 
 		cout << "Would you like to input another item? ";
