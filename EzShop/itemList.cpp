@@ -41,11 +41,12 @@ void itemList::addListItem(string name, unsigned long amount, string unit)
 	int location = searchList(name);
 	if (location == -1)
 	{
-		if (!(unit == "g" || unit == "kg" || unit == "mL" || unit == "L" ))
+		// Moved to main:
+		/*if (!(unit == "g" || unit == "kg" || unit == "mL" || unit == "L" ))
 		{
 			cout<< "Sorry: This item "<< name <<" will be not added \nTYPE: The unit "<< unit << "is not supported in this program. \nPlease convert your unit in terms of g, kg, mL, or L.\n";
 			return;
-		}
+		}*/
 		//store only in terms of g or mL
 		if( unit == "kg" )
 		{
