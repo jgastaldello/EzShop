@@ -45,6 +45,8 @@ void chooseFile(itemList &list);
 void start(itemList &inventoryList, bool &choice);
 void displayInventory(itemList &inventoryList);
 void manageInventory(itemList &inventoryList);
+void addToInventory(itemList &inventoryList);
+void removeFromInventory(itemList &inventoryList);
 void mainMenu(bool listSaved, itemList &inventoryList);
 
 int main()
@@ -208,6 +210,16 @@ void addToInventory(itemList &inventoryList)
 		string unit = " ";
 		cin >> unit;
 
+		while ((unit != "g") && (unit != "kg") && (unit != "mL") && (unit != "L"))
+		{
+			cout << "Sorry: This item will be not added\n";
+			cout << "  *TYPE: The unit " << unit << " is not supported in this program.\n";
+			cout << "  *Please convert your unit in terms of g, kg, mL, or L.\n";
+
+			cout << "Re-enter the item unit: ";
+			cin >> unit;
+		}
+
 		inventoryList.addListItem(name, amount, unit);
 
 		cout << "Would you like to input another item? ";
@@ -275,7 +287,7 @@ void mainMenu(bool listSaved, itemList &inventoryList)
 	{
 	case 1:
 		//manage inventory
-		manageInventory(inventoryList);
+		manageInventory(listSaved, inventoryList);
 		break;
 	case 2:
 		//manage recipes
