@@ -188,7 +188,7 @@ void manageInventory(bool listSaved, itemList &inventoryList) {
 	}
 	// Go back to main menu
 	else if (task == 4){
-		mainMenu(listSaved, inventoryList);
+		return;
 	}
 
 }
@@ -264,7 +264,10 @@ void mainMenu(bool listSaved, itemList &inventoryList)
 		- manage shopping list {goes to recipe menu}
 	*/
 
-	int totalMenuItems = 0;// user option
+	bool endMenu = false;
+	while(!endMenu)
+	{
+		int totalMenuItems = 0;// user option
 	/*
 	cout << ++totalMenuItems << ": Add items\n";
 	cout << ++totalMenuItems << ": Remove items\n";
@@ -274,33 +277,34 @@ void mainMenu(bool listSaved, itemList &inventoryList)
 	cout << ++totalMenuItems << ": Open file...\n";
 	cout << ++totalMenuItems << ": Quit\n";
 	*/
-	cout << ++totalMenuItems << ": manage inventory\n";
-	cout << ++totalMenuItems << ": manage recipes\n";
-	cout << ++totalMenuItems << ": manage shopping list\n";
-	cout << ++totalMenuItems << ": Quit"<<endl;
+		cout << ++totalMenuItems << ": manage inventory\n";
+		cout << ++totalMenuItems << ": manage recipes\n";
+		cout << ++totalMenuItems << ": manage shopping list\n";
+		cout << ++totalMenuItems << ": Quit"<<endl;
 
-	cout << "\nChoose a task: ";
-	int task = numberRangeChoice(1, totalMenuItems);
-	cout << "\n";
+		cout << "\nChoose a task: ";
+		int task = numberRangeChoice(1, totalMenuItems);
+		cout << "\n";
 
-	switch (task)
-	{
-	case 1:
-		//manage inventory
-		manageInventory(listSaved, inventoryList);
-		break;
-	case 2:
-		//manage recipes
-		break;
-	case 3:
-		//manage shopping list
-		break;
-	case 4:
+		switch (task)
+		{
+		case 1:
+			//manage inventory
+			manageInventory(listSaved, inventoryList);
+			break;
+		case 2:
+			//manage recipes
+			break;
+		case 3:
+			//manage shopping list
+			break;
+		case 4:
 		//Quit
-		
-		break;
-	default:
-		cout <<"Error: MENU default case\n";
-		break;
+			endMenu = true;
+			break;
+		default:
+			cout <<"Error: MENU default case\n";
+			break;
+		}
 	}
 }
