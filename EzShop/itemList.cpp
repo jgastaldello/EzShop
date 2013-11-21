@@ -8,16 +8,11 @@
 //constructor
 itemList::itemList(void)
 {
-	vector<item> list;
-	//list.reserve(10);
-	//item arrList = new item[10];
-	//arrIndex = 0;// indicate the last element
-	//arrSize = 10;// the size of the array
+	vector<item> list;	
 }
 //destructor
 itemList::~itemList(void)
 {
-	//delete[] arrList;
 }
 //opens an existing file into the array
 bool itemList::openList(string fileName)//Erick and Grant
@@ -26,17 +21,14 @@ bool itemList::openList(string fileName)//Erick and Grant
 	// Check if file opened correctly
 	if (ist.fail())
 	{
-		cout << "File not found\n";
+		cout << "File: "<< fileName<<" not found\n";
 		return false;
 	}
-	cout << "File is here :D\n";
 	string itemName, itemUnit, comma;
 	int itemSize;
 
 	while (ist >> itemName >> comma >> itemSize >> comma >> itemUnit)
-	{
-
-		//cout<< itemName<<comma<<itemSize<<comma<<itemUnit<<"\n";
+	{		
 		addListItem(itemName, itemSize, itemUnit);
 	}
 
@@ -51,9 +43,22 @@ void itemList::addListItem(string name, unsigned long amount, string unit)
 	{
 		if (!(unit == "g" || unit == "kg" || unit == "mL" || unit == "L" ))
 		{
-			cout<< "Sorry: This item will be not added \n TYPE: The unit "<< unit << "is not supported in this program. Please convert your unit in terms of g, kg, mL, or L.\n ";
+			cout<< "Sorry: This item "<< name <<" will be not added \nTYPE: The unit "<< unit << "is not supported in this program. \nPlease convert your unit in terms of g, kg, mL, or L.\n";
 			return;
 		}
+		//store only in terms of g or mL
+		if( unit == "kg" )
+		{
+			amount *= 1000;
+			unit = "g";
+		}
+
+		if( unit == "L" )
+		{
+			amount *= 1000;
+			unit = "mL";
+		}
+
 		list.end();
 		list.push_back(item(name, amount, unit));
 	}else{
@@ -83,7 +88,7 @@ void itemList::addListItem(string name, unsigned long amount, string unit)
 				tmpSize += amount;			
 				list[location].setUnit(unit);
 			}else{
-				cout<< "Sorry: This item will be not added \n TYPE: The unit "<< unit << "and/or "<< list[location].getUnit() <<"is/are not supported in this program. Please convert your unit in terms of g, kg, mL, or L.\n ";
+				cout<< "Sorry: This item "<< name <<" will be not added \nTYPE: The unit "<< unit << " and/or "<< list[location].getUnit() <<" is/are not supported in this program.\nPlease convert your unit in terms of g, kg, mL, or L.\n";
 				return;
 			}
 			list[location].setAmount(tmpSize);
@@ -107,13 +112,12 @@ void itemList::removeListItem(string itemName, unsigned long amountToRemove) //J
 		}
 	}
 	
-	list[location].setAmount(list[location].getAmount() - amountToRemove);
-	//arrList[location].setSize(arrList[location].getSize() - numToRemove);
+	list[location].setAmount(list[location].getAmount() - amountToRemove);	
 
-	if (list[location].getAmount() == 0)
+	if (list[location].getAmount() <= 0)
 	{
 		list.erase(list.begin() + location);
-		//delete &arrList[location];
+		
 	}
 }
 //Sorts the List array using insertion sort
@@ -121,17 +125,12 @@ void itemList::sortList() //Arthur and Karen
 {
 	for (unsigned int i = 0; i < list.size(); i++)
 	{
-		string key = list[i].getName();
-		//string key = arrList[i].getName();
-		//for (int j = i - 1; j >= 0 && (arrList[j].getName()).compare(key) > 0; j--) 
+		string key = list[i].getName();		
 		for (int j = i-1; j >= 0 && (list[j].getName()).compare(key) > 0; j--)
 		{
 			item temp = list[j + 1];
 			list[j + 1] = list[j];
-			list[j] = temp;
-			/*item temp = arrList[j + 1];
-			arrList[j + 1] = arrList[j];
-			arrList[j] = temp;*/
+			list[j] = temp;			
 		}
 	}
 }
@@ -152,7 +151,6 @@ void itemList::saveList(string fileName)
 //outputs the array into a readable format
 void itemList::viewList() const
 {
-	//There are nothing to view if it is empty
 	if (isEmpty())
 	{
 		cout<<"SORRY: The List is empty. \n";
@@ -183,7 +181,7 @@ void itemList::viewList() const
 			}
 			else if (i == 2)
 			{
-				header = to_string(list[x].getAmount()); //to_stirng converts number to string
+			//	header = to_string(list[x].getAmount()); //to_stirng converts number to string
 				stringLength = header.length();
 
 				if (stringLength > longestAmountName)
@@ -245,6 +243,5 @@ bool itemList::isEmpty(void) const
 {
 	return (list.size()==0);
 }
-
 
 
