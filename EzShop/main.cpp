@@ -37,6 +37,9 @@ TO-DO:
 #include "itemList.h"
 #include "item.h"
 #include "recipeList.h"
+#include "shoppingList.h"
+#include "recipeList.cpp"
+#include "shoppingList.cpp"
 #include <iostream>
 #include <limits.h>
 
@@ -50,17 +53,20 @@ void manageInventory(bool listSaved, itemList &inventoryList, recipeList &rList)
 void addToInventory(itemList &inventoryList);
 void removeFromInventory(itemList &inventoryList);
 
-void manageRecipes(bool listSaved, itemList &inventoryList, recipeList &rList);
+void manageRecipes(bool listSaved, itemList &inventoryList);
 void addRecipes(recipeList &rList);
 void removeFromRecipe(recipeList &rList);
 void displayRecipe(recipeList &rList);
 
-void mainMenu(bool listSaved, itemList &inventoryList, recipeList &rList);
+void createShoppingList(bool listSaved, itemList &inventoryList);
+
+void mainMenu(bool listSaved, itemList &inventoryList);
 
 int main()
 {
 	itemList inventoryList;
-	recipeList rList;
+	//recipeList rList;
+	//shoppingList sList;
 	bool listSaved = false;
 	start(inventoryList,listSaved);
 	cout << "\n";
@@ -84,7 +90,7 @@ int main()
 	inventoryList.sortList();
 	inventoryList.saveList("inventory");
 */
-	mainMenu(listSaved, inventoryList, rList);
+	mainMenu(listSaved, inventoryList);
 
 
 	system("pause");
@@ -196,7 +202,7 @@ void manageInventory(bool listSaved, itemList &inventoryList, recipeList &rList)
 		// Go back to main menu
 		else if (task == 4){
 			cont = 0;
-			mainMenu(listSaved, inventoryList, rList);
+			mainMenu(listSaved, inventoryList);
 		}
 	}
 
@@ -268,9 +274,10 @@ void displayInventory(itemList &inventoryList)
 }
 
 //manage recipe
-void manageRecipes(bool listSaved, itemList &inventoryList, recipeList &rList) {
+void manageRecipes(bool listSaved, itemList &inventoryList) {
 	int recipeOptions;
 	bool cont = 1;
+	recipeList rList = recipeList();
 
 	while (cont){
 		cout << "\nWhat would you like to do?\n";
@@ -305,7 +312,7 @@ void manageRecipes(bool listSaved, itemList &inventoryList, recipeList &rList) {
 		// Go back to main menu
 		else if (task == 4){
 			cont = 0;
-			mainMenu(listSaved, inventoryList, rList);
+			mainMenu(listSaved, inventoryList);
 		}
 	}
 
@@ -316,7 +323,7 @@ void addRecipes(recipeList &rList)
 {
 	bool contInput = 1;
 	while (contInput) {
-		cout << "Enter the recipe name: ";	//<-- does it need the extensions???no?
+		cout << "Enter the recipe name: ";	
 		string name = " ";
 		cin >> name;
 
@@ -353,8 +360,22 @@ void displayRecipe(recipeList &rList)
 	cout << "\n";
 }
 
+// Shopping list
+void createShoppingList(bool listSaved, itemList &inventoryList)
+{
+	shoppingList sList = shoppingList();
+	cout << "Enter a recipe: ";
+	string name = " ";
+	cin >> name;
+
+	sList.compareList(name);
+	sList.viewList();
+
+	mainMenu(listSaved, inventoryList);
+}
+
 // Main menu
-void mainMenu(bool listSaved, itemList &inventoryList, recipeList &rList)
+void mainMenu(bool listSaved, itemList &inventoryList)
 {
 		/*-main
 		- open existing inventory
@@ -382,12 +403,14 @@ void mainMenu(bool listSaved, itemList &inventoryList, recipeList &rList)
 	*/
 	cout << ++totalMenuItems << ": manage inventory\n";
 	cout << ++totalMenuItems << ": manage recipes\n";
-	cout << ++totalMenuItems << ": manage shopping list\n";
+	cout << ++totalMenuItems << ": create shopping list\n";
 	cout << ++totalMenuItems << ": Quit"<<endl;
 
 	cout << "\nChoose a task: ";
 	int task = numberRangeChoice(1, totalMenuItems);
 	cout << "\n";
+
+	recipeList rList;	
 
 	switch (task)
 	{
@@ -397,14 +420,16 @@ void mainMenu(bool listSaved, itemList &inventoryList, recipeList &rList)
 		break;
 	case 2:
 		//manage recipes
-		manageRecipes(listSaved, inventoryList, rList);
+		manageRecipes(listSaved, inventoryList);
 		break;
 	case 3:
-		//manage shopping list
-		break;
+		//create shopping list
+		createShoppingList(listSaved, inventoryList);
+
+		break;;
 	case 4:
 		//Quit
-		
+		exit(1);
 		break;
 	default:
 		cout <<"Error: MENU default case\n";
