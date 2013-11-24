@@ -127,7 +127,6 @@ bool recipeList::loadRecipe()
 		return false;
 	}	
 	string recipeName;
-	int itemSize;
 
 	while (ist >> recipeName)
 	{		
