@@ -43,6 +43,8 @@ TO-DO:
 #include <iostream>
 #include <limits.h>
 
+string invName;
+
 bool yesOrNo();
 int numberRangeChoice(int min, int max);
 void chooseFile(itemList &list);
@@ -148,6 +150,7 @@ void chooseFile(itemList &list)
 		}
 		
 	}
+	invName = fileName;
 }
 
 //displays welcome and opens existing inventory
@@ -278,6 +281,11 @@ void manageRecipes(bool listSaved, itemList &inventoryList) {
 	int recipeOptions;
 	bool cont = 1;
 	recipeList rList = recipeList();
+
+	cout << "Do you have a recipe list?\n";
+	if (yesOrNo()){
+		rList.loadRecipe();
+	}
 
 	while (cont){
 		cout << "\nWhat would you like to do?\n";
