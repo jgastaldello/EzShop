@@ -117,7 +117,12 @@ void shoppingList::saveList(string fileName)
 }
 void shoppingList::viewList() const
 {
+	if (shopList.isEmpty())
+	{
+		cout<< "You have all your ingredients \n";
+	}else{	
 	//view the shopping list
-	cout<< "Shopping List: \n";
-	shopList.viewList();
+		cout<< "Shopping List: \n";
+		shopList.viewList();
+	}
 }
