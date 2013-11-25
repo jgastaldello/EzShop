@@ -355,8 +355,12 @@ void removeFromRecipe(recipeList &rList)
 //prints the inventory list
 void displayRecipe(recipeList &rList)
 {
+	string rName = " ";
+	cout << "Enter your recipe name: ";
+	cin >> rName;
+
 	cout << "\nHere is your recipe:\n\n";
-	rList.viewRecipe();
+	rList.viewRecipe(rName);
 	cout << "\n";
 }
 
