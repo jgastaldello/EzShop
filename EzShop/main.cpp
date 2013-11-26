@@ -1,38 +1,9 @@
 /*
-GPL v3 - October 2013
+CMPT 106 Group Project:
 EzShop: Shopping, Simplified!
-Created by: Joshua Gastaldello, [add your names here]
+Created by: Joshua Gastaldello, Arthur Chu, Karen Li, Ryan Bosley, 
+			Vikash Ahir, Erick Liamzon, Grant Wallis and Ravdeep Khangura
 */
-
-/*
-TO-DO:
-- user menu
-	- inventory
-		- add item
-		- remove item
-		- save inventory
-		- save inventory as...
-		- open inventory...
-	- recipe
-		- add recipe [will save the recipe to its own file at the end of function]
-		- use recipe
-		- remove recipe
-		- save all recipe's
-		- open inventory...
-	- main
-		- open existing inventory
-		- open existing recipe(s)
-		- view inventory list
-		- view a recipe [function to choose one]
-		- manage inventory {goes to inventory menu}
-		- manage recipies {goes to recipe menu}
-- load items from file [itemList.cpp] (Erick, Grant)
-- recipe.h and .cpp
-*/
-
-//DO NOT INSERT ANY CLEAR SCREENS UNTIL THE PROGRAMMING IS COMPLETE!
-//always call sortList() before you viewList() or saveList()!
-//update the todo list!!!!!!
 
 #include "itemList.h"
 #include "item.h"
@@ -45,10 +16,7 @@ TO-DO:
 
 string invName;
 
-bool yesOrNo();
-int numberRangeChoice(int min, int max);
-void chooseFile(itemList &list);
-void start(itemList &inventoryList, bool &choice);
+void mainMenu(bool listSaved, itemList &inventoryList);
 
 void displayInventory(itemList &inventoryList);
 void manageInventory(bool listSaved, itemList &inventoryList, recipeList &rList);
@@ -62,36 +30,20 @@ void displayRecipe(recipeList &rList);
 
 void createShoppingList(bool listSaved, itemList &inventoryList);
 
-void mainMenu(bool listSaved, itemList &inventoryList);
+bool yesOrNo();
+int numberRangeChoice(int min, int max);
+void chooseFile(itemList &list);
+void start(itemList &inventoryList, bool &choice);
+
 
 int main()
 {
 	itemList inventoryList;
-	//recipeList rList;
-	//shoppingList sList;
+
 	bool listSaved = false;
 	start(inventoryList,listSaved);
 	cout << "\n";
 
-/*
-	inventoryList.addListItem("apple", 5,"items");
-	inventoryList.addListItem("orange", 7, "items");
-	inventoryList.addListItem("peach", 1, "items");
-	inventoryList.addListItem("computer", 3, "items");
-	inventoryList.addListItem("ipod", 7, "items");
-	inventoryList.addListItem("ppt file", 50, "files");
-	inventoryList.addListItem("laptop", 3, "items");
-	inventoryList.addListItem("phone", 100, "items");
-	inventoryList.addListItem("milk", 2, "2L jugs");
-	inventoryList.addListItem("coke", 12, "1");
-	inventoryList.addListItem("storage", 1024, "bytes");
-	inventoryList.addListItem("keyboards", 3, "items");
-
-	inventoryList.removeListItem("ppt file", 10);
-	inventoryList.removeListItem("peach", 1);
-	inventoryList.sortList();
-	inventoryList.saveList("inventory");
-*/
 	mainMenu(listSaved, inventoryList);
 
 
@@ -99,65 +51,14 @@ int main()
 	return 0;
 }
 
-//gets a Y or N input and returns T or F
-bool yesOrNo()
-{
-	string input;
-	cout << "(Y or N) ";
-	cin >> input;
-	while ((input != "Y") && (input != "y") && (input != "N") && (input != "n"))
-	{
-		cout << "Invalid input. Try again: ";
-		cin >> input;
-	}
-	cin.sync();
-	return ((input == "Y") || (input == "y"));
-}
-
-//asks user for number between the specified range
-int numberRangeChoice(int min, int max)
-{
-	int input;
-	cout << "("<<min<<" to "<<max<<") ";
-	cin >> input;
-	while (input < min || input > max)
-	{
-		cout << "Invalid input. Try again: ";
-		cin >> input;
-	}
-	cin.sync();
-	return input;
-}
-
-//opens an inventory file
-void chooseFile(itemList &list)
-{
-	// Asks for file name
-	string fileName;
-	cout << "\nEnter your file name (with extension): ";  //<-- doesn't work without extension
-	getline(cin, fileName);
-	bool check = list.openList(fileName);
-
-	// If file name is invalid, continues to ask for file name
-	while (!check)
-	{
-		//cout << "File not found\n";
-		string fileName;
-		cout << "\nEnter your file name (with extension): ";
-		getline(cin, fileName);
-		if (list.openList(fileName)){
-			check = 1;
-		}
-		
-	}
-	invName = fileName;
-}
-
 //displays welcome and opens existing inventory
 void start(itemList &inventoryList, bool &choice)
 {
+	cout << "*********************************\n";
 	cout << "Welcome to EzShop!\n";
+	cout << "*********************************\n";
 	cout << "\n";
+
 	cout << "Would you like to open an existing inventory? ";
 	choice = yesOrNo();
 
@@ -167,13 +68,59 @@ void start(itemList &inventoryList, bool &choice)
 	}
 }
 
+// Main menu
+void mainMenu(bool listSaved, itemList &inventoryList)
+{
+	int totalMenuItems = 0;		// user options
+
+	cout << "\nMain Menu\n";
+	cout << "-----------------------\n";
+
+	cout << ++totalMenuItems << ": Manage inventory\n";
+	cout << ++totalMenuItems << ": Manage recipes\n";
+	cout << ++totalMenuItems << ": Create shopping list\n";
+	cout << ++totalMenuItems << ": Quit" << endl;
+
+	cout << "\nChoose a task: ";
+	int task = numberRangeChoice(1, totalMenuItems);
+	cout << "\n";
+
+	recipeList rList;
+
+	switch (task)
+	{
+	case 1:
+		//manage inventory
+		manageInventory(listSaved, inventoryList, rList);
+		break;
+	case 2:
+		//manage recipes
+		manageRecipes(listSaved, inventoryList);
+		break;
+	case 3:
+		//create shopping list
+		createShoppingList(listSaved, inventoryList);
+
+		break;;
+	case 4:
+		//Quit
+		exit(1);
+		break;
+	default:
+		cout << "Error: MENU default case\n";
+		break;
+	}
+}
+
 //manage inventory
 void manageInventory(bool listSaved, itemList &inventoryList, recipeList &rList) {
-	int inventoryOptions;
+	int inventoryOptions;		// user options
 	bool cont = 1;
 
 	while (cont){
-		cout << "\nWhat would you like to do?\n";
+		cout << "\nInventory Menu\n";
+		cout << "-----------------------\n";
+
 		inventoryOptions = 0;
 		cout << ++inventoryOptions << ": Add item to inventory\n";
 		cout << ++inventoryOptions << ": Remove item from inventory\n";
@@ -232,7 +179,7 @@ void addToInventory(itemList &inventoryList)
 		while ((unit != "g") && (unit != "kg") && (unit != "mL") && (unit != "L"))
 		{
 			cout << "Sorry: This item will be not added\n";
-			cout << "  *TYPE: The unit " << unit << " is not supported in this program.\n";
+			cout << "  *TYPE: The unit "" << unit << "" is not supported in this program.\n";
 			cout << "  *Please convert your unit in terms of g, kg, mL, or L.\n";
 
 			cout << "Re-enter the item unit: ";
@@ -268,7 +215,7 @@ void removeFromInventory(itemList &inventoryList)
 	}
 }
 
-//prints the inventory list
+// Prints the inventory list
 void displayInventory(itemList &inventoryList)
 {
 	cout << "\nHere is your current inventory:\n\n";
@@ -276,9 +223,9 @@ void displayInventory(itemList &inventoryList)
 	cout << "\n";
 }
 
-//manage recipe
+// Manage recipe
 void manageRecipes(bool listSaved, itemList &inventoryList) {
-	int recipeOptions;
+	int recipeOptions;		// user options
 	bool cont = 1;
 	recipeList rList = recipeList();
 
@@ -288,11 +235,14 @@ void manageRecipes(bool listSaved, itemList &inventoryList) {
 	}
 
 	while (cont){
-		cout << "\nWhat would you like to do?\n";
+		cout << "\nRecipe Menu\n";
+		cout << "-----------------------\n";
+
 		recipeOptions = 0;
 		cout << ++recipeOptions << ": Add a recipe\n";
 		cout << ++recipeOptions << ": Remove a recipe\n";
-		cout << ++recipeOptions << ": Display a recipe\n";
+		cout << ++recipeOptions << ": Display a specific recipe\n";
+		cout << ++recipeOptions << ": Display all recipes\n";
 		cout << ++recipeOptions << ": Go back\n";
 
 		cout << "\n";
@@ -317,8 +267,11 @@ void manageRecipes(bool listSaved, itemList &inventoryList) {
 		else if (task == 3){
 			displayRecipe(rList);
 		}
-		// Go back to main menu
 		else if (task == 4){
+			rList.viewRecipe();
+		}
+		// Go back to main menu
+		else if (task == 5){
 			cont = 0;
 			mainMenu(listSaved, inventoryList);
 		}
@@ -331,7 +284,7 @@ void addRecipes(recipeList &rList)
 {
 	bool contInput = 1;
 	while (contInput) {
-		cout << "Enter the recipe name: ";	
+		cout << "Enter the recipe name: ";
 		string name = " ";
 		cin >> name;
 
@@ -360,7 +313,7 @@ void removeFromRecipe(recipeList &rList)
 	}
 }
 
-//prints the inventory list
+// Display recipe
 void displayRecipe(recipeList &rList)
 {
 	string rName = " ";
@@ -383,68 +336,66 @@ void createShoppingList(bool listSaved, itemList &inventoryList)
 	sList.compareList(name);
 	sList.viewList();
 
+	cout << "Do you want to save this shopping list? ";
+	if (yesOrNo()){
+		cout << "Choose a name: ";
+		string sName;
+		cin >> sName;
+		sList.saveList(sName);
+	}
+
 	mainMenu(listSaved, inventoryList);
 }
 
-// Main menu
-void mainMenu(bool listSaved, itemList &inventoryList)
+// Gets a Y or N input and returns T or F
+bool yesOrNo()
 {
-		/*-main
-		- open existing inventory
-		- open existing recipe(s)
-		- view inventory list
-		- view a recipe[function to choose one]
-		- manage inventory{ goes to inventory menu }
-		-manage recipies{ goes to recipe menu }*/
-	/*
-	Arthur -main
-		- manage inventory {goes to inventory menu}
-		- manage recipies {goes to recipe menu}
-		- manage shopping list {goes to recipe menu}
-	*/
-
-	int totalMenuItems = 0;// user option
-	/*
-	cout << ++totalMenuItems << ": Add items\n";
-	cout << ++totalMenuItems << ": Remove items\n";
-	cout << ++totalMenuItems << ": View items\n";
-	cout << ++totalMenuItems << ": Save\n";
-	cout << ++totalMenuItems << ": Save as...\n";
-	cout << ++totalMenuItems << ": Open file...\n";
-	cout << ++totalMenuItems << ": Quit\n";
-	*/
-	cout << ++totalMenuItems << ": manage inventory\n";
-	cout << ++totalMenuItems << ": manage recipes\n";
-	cout << ++totalMenuItems << ": create shopping list\n";
-	cout << ++totalMenuItems << ": Quit"<<endl;
-
-	cout << "\nChoose a task: ";
-	int task = numberRangeChoice(1, totalMenuItems);
-	cout << "\n";
-
-	recipeList rList;	
-
-	switch (task)
+	string input;
+	cout << "(Y or N) ";
+	cin >> input;
+	while ((input != "Y") && (input != "y") && (input != "N") && (input != "n"))
 	{
-	case 1:
-		//manage inventory
-		manageInventory(listSaved, inventoryList, rList);
-		break;
-	case 2:
-		//manage recipes
-		manageRecipes(listSaved, inventoryList);
-		break;
-	case 3:
-		//create shopping list
-		createShoppingList(listSaved, inventoryList);
-
-		break;;
-	case 4:
-		//Quit
-		exit(1);
-		break;
-	default:
-		cout <<"Error: MENU default case\n";
-		break;
+		cout << "Invalid input. Try again: ";
+		cin >> input;
 	}
+	cin.sync();
+	return ((input == "Y") || (input == "y"));
+}
+
+// Asks user for number between the specified range
+int numberRangeChoice(int min, int max)
+{
+	int input;
+	cout << "("<<min<<" to "<<max<<") ";
+	cin >> input;
+	while (input < min || input > max)
+	{
+		cout << "Invalid input. Try again: ";
+		cin >> input;
+	}
+	cin.sync();
+	return input;
+}
+
+// Opens an inventory file
+void chooseFile(itemList &list)
+{
+	// Asks for file name
+	string fileName;
+	cout << "\nEnter your file name (with extension): "; 
+	getline(cin, fileName);
+	bool check = list.openList(fileName);
+
+	// If file name is invalid, continues to ask for file name
+	while (!check)
+	{
+		string fileName;
+		cout << "\nEnter your file name (with extension): ";
+		getline(cin, fileName);
+		if (list.openList(fileName)){
+			check = 1;
+		}
+		
+	}
+	invName = fileName;
 }
